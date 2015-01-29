@@ -1,0 +1,65 @@
+#parse("header.vm")
+</head>
+
+<style>
+#tblAdd td:first-child{
+    background-color: #AABBCC;
+}
+</style>
+
+<script type="text/javascript">
+
+function goHome(){
+    window.location = "$homeURL";
+}
+
+$(function(){
+   
+    $("#btnSubmit").click(function(){
+        var input = $("#cityId").val();
+        if(input != ""){
+            $("#frmAddCity").submit();
+        }
+        else{
+            alert("Please enter city ID");
+        }
+    });
+
+});
+    
+   
+    
+</script>
+
+<h2>
+#if( $request.getParameter("action") == "showCityForm")
+New City Information
+#else
+City Information
+#end
+</h2>
+<form id="frmAddCity" action="$addCityURL" method="POST">
+<table id="tblAdd">
+    <tr>
+        <td>ID</td>
+        <td><input type="text" name="cityId" id="cityId" 
+        #if($city.id)
+        value="$city.id"
+        #end
+        #if( $request.getParameter("action") == "showEdit")
+            readonly
+        #end
+        /></td>
+    </tr>
+    <tr>
+        <td>Name</td>
+        <td><input type="text" name="cityName" 
+        #if($city.cityName)
+        value="$city.cityName"/>
+        #end
+        </td>
+    </tr>
+</table>
+<input id="btnSubmit" type="button" value="Add City"/>
+<input type="button" value="Cancel" onclick="goHome()"/>
+</form>
